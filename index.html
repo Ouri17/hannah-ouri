@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mariage Eva & David</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #f5f3f0, #e8e4df);
+            min-height: 100vh;
+            color: #4a5d23;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .nav-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            color: #85c1a6;
+            font-style: italic;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-menu li {
+            cursor: pointer;
+            color: #4a5d23;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 10px 0;
+        }
+
+        .nav-menu li:hover {
+            color: #85c1a6;
+        }
+
+        .nav-menu li.active {
+            color: #85c1a6;
+            border-bottom: 2px solid #85c1a6;
+        }
+
+        /* Menu mobile */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 3px;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background: #4a5d23;
+            transition: 0.3s;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .mobile-nav.active {
+            display: block;
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+            padding: 20px;
+        }
+
+        .mobile-nav li {
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            color: #4a5d23;
+        }
+
+        /* Pages */
+        .page {
+            display: none;
+            padding-top: 80px;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page.home {
+            padding-top: 0;
+        }
+
+        /* Page d'accueil */
+        .home-header {
+            text-align: center;
+            margin: 60px 0;
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .home-header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            right: -50px;
+            bottom: -50px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="%23f4d03f" opacity="0.3"/><circle cx="80" cy="30" r="1.5" fill="%2385c1a6" opacity="0.4"/><circle cx="60" cy="70" r="2.5" fill="%23f39c12" opacity="0.2"/></svg>') repeat;
+            z-index: 0;
+        }
+
+        .home-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .monogram {
+            font-size: 6rem;
+            color: #85c1a6;
+            font-style: italic;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .names {
+            font-size: 3.5rem;
+            color: #4a5d23;
+            margin: 30px 0;
+            font-weight: 300;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 50px 0;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            text-align: center;
+            background: linear-gradient(135deg, #f4d03f, #f39c12);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            min-width: 120px;
+        }
+
+        .countdown-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .countdown-label {
+            font-size: 1rem;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 8px;
+        }
+
+        .home-button {
+            background: linear-gradient(135deg, #85c1a6, #6fa88a);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            margin-top: 40px;
+        }
+
+        .home-button:hover {
+            background: linear-gradient(135deg, #6fa88a, #5a8f73);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Page menu événements */
+        .events-menu {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .menu-title {
+            font-size: 2.5rem;
+            color: #4a5d23;
+            margin-bottom: 50px;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .event-button {
+            background: white;
+            border: none;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .event-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #85c1a6, #f4d03f);
+        }
+
+        .event-button h3 {
+            font-size: 1.8rem;
+            color: #4a5d23;
+            margin-bottom: 15px;
+        }
+
+        .event-button .date {
+            color: #7a8450;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .event-button .location {
+            color: #8a9460;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Pages d'événements */
+        .event-page {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #85c1a6, #f4d03f);
+        }
+
+        .event-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        .event-title {
+            font-size: 2.5rem;
+            color: #4a5d23;
+            margin-bottom: 20px;
+        }
+
+        .event-date {
+            font-size: 1.3rem;
+            color: #7a8450;
+            margin-bottom: 15px;
+        }
+
+        .event-location {
+            color: #8a9460;
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 30px;
+            white-space: pre-line;
+        }
+
+        .event-description {
+            color: #6a7540;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            white-space: pre-line;
+            text-align: left;
+        }
+
+        /* Formulaire */
+        .response-form {
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .form-title {
+            color: #4a5d23;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4a5d23;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #85c1a6;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, #85c1a6, #6fa88a);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-family: inherit;
+        }
+
+        .submit-button:hover {
+            background: linear-gradient(135deg, #6fa88a, #5a8f73);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Admin panel */
+        .admin-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .responses-grid {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .response-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #85c1a6;
+        }
+
+        .response-item.declined {
+            border-left-color: #e74c3c;
+        }
+
+        /* Decorations */
+        .lemon-decoration {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: #f4d03f;
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+
+        .lemon-1 { top: 20px; left: 20px; }
+        .lemon-2 { top: 50px; right: 30px; }
+        .lemon-3 { bottom: 40px; left: 40px; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .names {
+                font-size: 2.5rem;
+            }
+            
+            .monogram {
+                font-size: 4rem;
+            }
+            
+            .countdown {
+                gap: 15px;
+            }
+            
+            .countdown-item {
+                min-width: 90px;
+                padding: 20px;
+            }
+            
+            .countdown-number {
+                font-size: 2rem;
+            }
+            
+            .events-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .event-page {
+                padding: 25px;
+            }
+            
+            .response-form {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-content">
+            <div class="nav-logo">E & D</div>
+            <ul class="nav-menu">
+                <li onclick="showPage('home')">Accueil</li>
+                <li onclick="showPage('menu')">Événements</li>
+                <li onclick="showPage('mairie')">Mairie</li>
+                <li onclick="showPage('henne')">Henné</li>
+                <li onclick="showPage('houppa')">Houppa</li>
+                <li onclick="showPage('chabbat')">Chabbat</li>
+                <li onclick="showPage('admin')">Admin</li>
+            </ul>
+            <div class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="mobile-nav" id="mobileNav">
+                <ul>
+                    <li onclick="showPage('home'); toggleMobileMenu()">Accueil</li>
+                    <li onclick="showPage('menu'); toggleMobileMenu()">Événements</li>
+                    <li onclick="showPage('mairie'); toggleMobileMenu()">Mairie</li>
+                    <li onclick="showPage('henne'); toggleMobileMenu()">Henné</li>
+                    <li onclick="showPage('houppa'); toggleMobileMenu()">Houppa</li>
+                    <li onclick="showPage('chabbat'); toggleMobileMenu()">Chabbat</li>
+                    <li onclick="showPage('admin'); toggleMobileMenu()">Admin</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- PAGE ACCUEIL -->
+        <div id="home" class="page home active">
+            <div class="home-header">
+                <div class="lemon-decoration lemon-1"></div>
+                <div class="lemon-decoration lemon-2"></div>
+                <div class="lemon-decoration lemon-3"></div>
+                
+                <div class="home-content">
+                    <div class="monogram">E & D</div>
+                    <div class="names">Mariage Eva & David</div>
+                    
+                    <div class="countdown" id="countdown">
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="days">00</div>
+                            <div class="countdown-label">Jours</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="hours">00</div>
+                            <div class="countdown-label">Heures</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="minutes">00</div>
+                            <div class="countdown-label">Minutes</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="seconds">00</div>
+                            <div class="countdown-label">Secondes</div>
+                        </div>
+                    </div>
+                    
+                    <button class="home-button" onclick="showPage('menu')">
+                        Voir l'invitation
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE MENU ÉVÉNEMENTS -->
+        <div id="menu" class="page">
+            <div class="events-menu">
+                <h2 class="menu-title">Nos Événements</h2>
+                <div class="events-grid">
+                    <button class="event-button" onclick="showPage('mairie')">
+                        <h3>MAIRIE</h3>
+                        <div class="date">Mardi 8 juillet 2025 à 14h30</div>
+                        <div class="location">Paris 10e</div>
+                    </button>
+                    
+                    <button class="event-button" onclick="showPage('henne')">
+                        <h3>HENNÉ</h3>
+                        <div class="date">Date à définir</div>
+                        <div class="location">Lieu à confirmer</div>
+                    </button>
+                    
+                    <button class="event-button" onclick="showPage('houppa')">
+                        <h3>HOUPPA</h3>
+                        <div class="date">Dimanche 24 août 2025 à 18h</div>
+                        <div class="location">Israël</div>
+                    </button>
+                    
+                    <button class="event-button" onclick="showPage('chabbat')">
+                        <h3>CHABBAT</h3>
+                        <div class="date">Date à définir</div>
+                        <div class="location">Lieu à confirmer</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE MAIRIE -->
+        <div id="mairie" class="page">
+            <div class="event-page">
+                <div class="event-header">
+                    <h2 class="event-title">MAIRIE</h2>
+                    <div class="event-date">Mardi 8 juillet 2025 à 14h30</div>
+                    <div class="event-location">Mairie du 10e arrondissement
+72 rue du Faubourg Saint-Martin, 75010 Paris</div>
+                    <div class="event-description">Eva & David se diront "Oui"
+
+La cérémonie civile sera suivie d'un vin d'honneur.</div>
+                </div>
+                
+                <div class="response-form">
+                    <h3 class="form-title">VOTRE RÉPONSE :</h3>
+                    <form onsubmit="submitResponse(event, 'mairie')">
+                        <div class="form-group">
+                            <label for="mairie-nom">Nom:</label>
+                            <input type="text" id="mairie-nom" name="nom" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="mairie-prenom">Prénom:</label>
+                            <input type="text" id="mairie-prenom" name="prenom" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="mairie-attendance">Assistera à la mairie:</label>
+                            <select id="mairie-attendance" name="attendance" required>
+                                <option value="">Sélectionnez...</option>
+                                <option value="oui">Oui</option>
+                                <option value="non">Non</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="mairie-guests">Nombre de personnes:</label>
+                            <input type="number" id="mairie-guests" name="guests" min="1" value="1">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="mairie-message">Message pour les mariés:</label>
+                            <textarea id="mairie-message" name="message" rows="4" placeholder="Vos félicitations et souhaits..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-button">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE HENNÉ -->
+        <div id="henne" class="page">
+            <div class="event-page">
+                <div class="event-header">
+                    <h2 class="event-title">HENNÉ</h2>
+                    <div class="event-date">Date à définir</div>
+                    <div class="event-location">Lieu à confirmer</div>
+                    <div class="event-description">Cérémonie traditionnelle du henné avec famille et amis proches.
+
+Une soirée pleine de traditions, de musique et de joie pour célébrer l'union d'Eva et David selon les coutumes.</div>
+                </div>
+                
+                <div class="response-form">
+                    <h3 class="form-title">VOTRE RÉPONSE :</h3>
+                    <form onsubmit="submitResponse(event, 'henne')">
+                        <div class="form-group">
+                            <label for="henne-nom">Nom:</label>
+                            <input type="text" id="henne-nom" name="nom" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="henne-prenom">Prénom:</label>
+                            <input type="text" id="henne-prenom" name="prenom" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="henne-attendance">Assistera au henné:</label>
+                            <select id="henne-attendance" name="attendance" required>
+                                <option value="">Sélectionnez...</option>
+                                <option value="oui">Oui</option>
+                                <option value="non">Non</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="henne-guests">Nombre de personnes:</label>
+                            <input type="number" id="henne-guests" name="guests" min="1" value="1">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="henne-message">Message pour les mariés:</label>
+                            <textarea id="henne-message" name="message" rows="4" placeholder="Vos félicitations et souhaits..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-button">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE HOUPPA -->
+        <div id="houppa" class="page">
+            <div class="event-page">
+                <div class="event-header">
+                    <h2 class="event-title">HOUPPA</h2>
+                    <div class="event-date">Dimanche 24 août 2025 à 18h précises</div>
+                    <div class="event-location">Hermozo
+Modi'in-Maccabim-Re'ut, Israël</div>
+                    <div class="event-description">La cérémonie religieuse débutera à 18h00 précises et sera suivie d'un cocktail puis d'une réception.
+
+Des bus seront mis à disposition depuis Netanya et Tel-Aviv pour vous conduire à la Houppa.
+
+Ils vous y ramèneront en fin de soirée. Veuillez indiquer dans le formulaire si vous souhaitez en profiter.</div>
+                </div>
+                
+                <div class="response-form">
+                    <h3 class="form-title">VOTRE RÉPONSE :</h3>
+                    <form onsubmit="submitResponse(event, 'houppa')">
+                        <div class="form-group">
+                            <label for="houppa-nom">Nom:</label>
+                            <input type="text" id="houppa-nom" name="nom" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="houppa-prenom">Prénom:</label>
+                            <input type="text" id="houppa-prenom" name="prenom" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="houppa-attendance">Assistera à la Houppa:</label>
+                            <select id="houppa-attendance" name="attendance" required>
+                                <option value="">Sélectionnez...</option>
+                                <option value="oui">Oui</option>
+                                <option value="non">Non</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="houppa-guests">Nombre de personnes:</label>
+                            <input type="number" id="houppa-guests" name="guests" min="1" value="1">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Participation à l'événement avec transport en bus:</label>
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" name="transport" value="netanya">
+                                    Oui, depuis Netanya
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="transport" value="telaviv">
+                                    Oui, depuis Tel Aviv
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="houppa-message">Message pour les mariés:</label>
+                            <textarea id="houppa-message" name="message" rows="4" placeholder="Vos félicitations et souhaits..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-button">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE CHABBAT -->
+        <div id="chabbat" class="page">
+            <div class="event-page">
+                <div class="event-header">
+                    <h2 class="event-title">CHABBAT</h2>
+                    <div class="event-date">Date à définir</div>
+                    <div class="event-location">Lieu à confirmer</div>
+                    <div class="event-description">Célébration du Chabbat avec famille et amis intimes.
+
+Un moment de recueillement et de partage dans l'intimité familiale pour célébrer cette union bénie.</div>
+                </div>
+                
+                <div class="response-form">
+                    <h3 class="form-title">VOTRE RÉPONSE :</h3>
+                    <form onsubmit="submitResponse(event, 'chabbat')">
+                        <div class="form-group">
+                            <label for="chabbat-nom">Nom:</label>
+                            <input type="text" id="chabbat-nom" name="nom" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="chabbat-prenom">Prénom:</label>
+                            <input type="text" id="chabbat-prenom" name="prenom" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="chabbat-attendance">Assistera au Chabbat:</label>
+                            <select id="chabbat-attendance" name="attendance" required>
+                                <option value="">Sélectionnez...</option>
+                                <option value="oui">Oui</option>
+                                <option value="non">Non</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="chabbat-guests">Nombre de personnes:</label>
+                            <input type="number" id="chabbat-guests" name="guests" min="1" value="1">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="chabbat-message">Message pour les mariés:</label>
+                            <textarea id="chabbat-message" name="message" rows="4" placeholder="Vos félicitations et souhaits..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-button">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE ADMIN -->
+        <div id="admin" class="page">
+            <div class="admin-panel">
+                <h3>Panneau d'Administration</h3>
+                <button onclick="toggleResponses()" class="home-button" style="margin-top: 20px;">Voir les réponses</button>
+                <div id="responses" class="responses-grid" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let currentPage = 'home';
+        let responses = JSON.parse(localStorage.getItem('weddingResponses') || '{}');
+
+        // Navigation
+        function showPage(pageId) {
+            // Cacher toutes les pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Afficher la page demandée
+            document.getElementById(pageId).classList.add('active');
+            
+            // Mettre à jour la navigation
+            const navItems = document.querySelectorAll('.nav-menu li');
+            navItems.forEach(item => item.classList.remove('active'));
+            
+            // Afficher/cacher la navbar
+            const navbar = document.getElementById('navbar');
+            if (pageId === 'home') {
+                navbar.style.display = 'none';
+            } else {
+                navbar.style.display = 'block';
+                // Ajouter classe active à l'item correspondant
+                const activeItem = Array.from(navItems).find(item => 
+                    item.textContent.toLowerCase().includes(getPageDisplayName(pageId).toLowerCase())
+                );
+                if (activeItem) activeItem.classList.add('active');
+            }
+            
+            currentPage = pageId;
+        }
+
+        function getPageDisplayName(pageId) {
+            const names = {
+                'home': 'Accueil',
+                'menu': 'Événements',
+                'mairie': 'Mairie',
+                'henne': 'Henné',
+                'houppa': 'Houppa',
+                'chabbat': 'Chabbat',
+                'admin': 'Admin'
+            };
+            return names[pageId] || pageId;
+        }
+
+        function toggleMobileMenu() {
+            const mobileNav = document.getElementById('mobileNav');
+            mobileNav.classList.toggle('active');
+        }
+
+        // Countdown
+        function updateCountdown() {
+            const weddingDate = new Date('2025-08-24T18:00:00');
+            const now = new Date();
+            const diff = weddingDate - now;
+
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Gestion des formulaires
+        function submitResponse(event, eventType) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const response = {
+                nom: formData.get('nom'),
+                prenom: formData.get('prenom'),
+                attendance: formData.get('attendance'),
+                guests: formData.get('guests'),
+                message: formData.get('message'),
+                eventType: eventType,
+                timestamp: new Date().toISOString(),
+                transport: []
+            };
+            
+            // Gérer le transport pour la Houppa
+            if (eventType === 'houppa') {
+                const transportInputs = document.querySelectorAll(`#${eventType} input[name="transport"]:checked`);
+                response.transport = Array.from(transportInputs).map(input => input.value);
+            }
+            
+            // Sauvegarder la réponse
+            const responseKey = `${eventType}_${response.nom}_${response.prenom}`;
+            responses[responseKey] = response;
+            localStorage.setItem('weddingResponses', JSON.stringify(responses));
+            
+            alert('Votre réponse a été enregistrée avec succès !');
+            
+            // Reset le formulaire
+            event.target.reset();
+            
+            // Retourner au menu
+            showPage('menu');
+        }
+
+        // Admin functions
+        function toggleResponses() {
+            const responsesDiv = document.getElementById('responses');
+            if (responsesDiv.style.display === 'none') {
+                responsesDiv.style.display = 'block';
+                displayResponses();
+            } else {
+                responsesDiv.style.display = 'none';
+            }
+        }
+
+        function displayResponses() {
+            const responsesDiv = document.getElementById('responses');
+            const responsesList = Object.values(responses);
+            
+            if (responsesList.length === 0) {
+                responsesDiv.innerHTML = '<p>Aucune réponse pour le moment.</p>';
+                return;
+            }
+            
+            const groupedResponses = responsesList.reduce((acc, response) => {
+                if (!acc[response.eventType]) {
+                    acc[response.eventType] = [];
+                }
+                acc[response.eventType].push(response);
+                return acc;
+            }, {});
+            
+            const eventNames = {
+                'mairie': 'MAIRIE',
+                'henne': 'HENNÉ', 
+                'houppa': 'HOUPPA',
+                'chabbat': 'CHABBAT'
+            };
+            
+            let html = '';
+            Object.keys(groupedResponses).forEach(eventType => {
+                const eventResponses = groupedResponses[eventType];
+                const attending = eventResponses.filter(r => r.attendance === 'oui').length;
+                const totalGuests = eventResponses
+                    .filter(r => r.attendance === 'oui')
+                    .reduce((sum, r) => sum + parseInt(r.guests || 1), 0);
+                
+                html += `
+                    <h4 style="color: #4a5d23; margin: 30px 0 15px 0; font-size: 1.3rem;">
+                        ${eventNames[eventType]} - ${attending} confirmations (${totalGuests} personnes)
+                    </h4>
+                `;
+                
+                eventResponses.forEach(response => {
+                    const statusClass = response.attendance === 'oui' ? '' : 'declined';
+                    html += `
+                        <div class="response-item ${statusClass}">
+                            <strong>${response.prenom} ${response.nom}</strong> - 
+                            ${response.attendance === 'oui' ? 'Présent' : 'Absent'}
+                            ${response.attendance === 'oui' ? ` (${response.guests} personne${parseInt(response.guests) > 1 ? 's' : ''})` : ''}
+                            ${response.transport && response.transport.length > 0 ? 
+                                `<br><small>Transport: ${response.transport.join(', ')}</small>` : ''}
+                            ${response.message ? `<br><em>"${response.message}"</em>` : ''}
+                            <br><small>Répondu le ${new Date(response.timestamp).toLocaleDateString('fr-FR')}</small>
+                        </div>
+                    `;
+                });
+            });
+            
+            responsesDiv.innerHTML = html;
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('home');
+        });
+
+        // Fermer le menu mobile en cliquant à l'extérieur
+        document.addEventListener('click', function(event) {
+            const mobileNav = document.getElementById('mobileNav');
+            const mobileBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (!mobileNav.contains(event.target) && !mobileBtn.contains(event.target)) {
+                mobileNav.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
