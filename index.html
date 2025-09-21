@@ -14,7 +14,7 @@
         body {
             font-family: 'Georgia', serif;
             /* Votre image Imgur */
-            background: url('https://i.imgur.com/mk3Ib6x.jpeg) center center fixed;
+            background: url('https://i.imgur.com/mk3Ib6x.jpeg') center center fixed;
             background-size: cover;
             
             /* Option avec overlay léger si besoin (décommentez pour utiliser) */
@@ -635,8 +635,8 @@
                 <div class="lemon-decoration lemon-3"></div>
                 
                 <div class="home-content">
-                    <div class="monogram">E & D</div>
-                    <div class="names">Mariage Eva & David</div>
+                    <div class="monogram">H & O</div>
+                    <div class="names">Mariage Hannah & Ouri</div>
                     
                     <div class="countdown" id="countdown">
                         <div class="countdown-item">
@@ -671,7 +671,7 @@
                 <div class="events-grid">
                     <button class="event-button" onclick="showPage('mairie')">
                         <h3>MAIRIE</h3>
-                        <div class="date">Mardi 18 juillet 2026 à 14h30</div>
+                        <div class="date">Mardi 8 juillet 2025 à 14h30</div>
                         <div class="location">Toulouse </div>
                     </button>
                     
@@ -683,7 +683,7 @@
                     
                     <button class="event-button" onclick="showPage('houppa')">
                         <h3>HOUPPA</h3>
-                        <div class="date">Mercredi 12 août 2026 à 18h</div>
+                        <div class="date">Mardi 12 août 2026 à 18h</div>
                         <div class="location">Israël</div>
                     </button>
                     
@@ -756,7 +756,7 @@ La cérémonie civile sera suivie d'un vin d'honneur.</div>
                     <div class="event-location">Lieu à confirmer</div>
                     <div class="event-description">Cérémonie traditionnelle du henné avec famille et amis proches.
 
-Une soirée pleine de traditions, de musique et de joie pour célébrer l'union d'Eva et David selon les coutumes.</div>
+Une soirée pleine de traditions, de musique et de joie pour célébrer l'union d'Hannah et Ouri selon les coutumes.</div>
                 </div>
                 
                 <div class="response-form">
@@ -802,7 +802,7 @@ Une soirée pleine de traditions, de musique et de joie pour célébrer l'union 
             <div class="event-page">
                 <div class="event-header">
                     <h2 class="event-title">HOUPPA</h2>
-                    <div class="event-date">Dimanche 12 août 2026 à 18h précises</div>
+                    <div class="event-date">Mardi 12 août 2026 à 18h précises</div>
                     <div class="event-location">Terra
 Césaré, Israël</div>
                     <div class="event-description">La cérémonie religieuse débutera à 18h00 précises et sera suivie d'un cocktail puis d'une réception.
@@ -927,7 +927,7 @@ Un moment de recueillement et de partage dans l'intimité familiale pour céléb
     <script>
         // Variables globales
         let currentPage = 'home';
-        let responses = JSON.parse(localStorage.getItem('weddingResponses') || '{}');
+        let responses = {};
 
         // Navigation
         function showPage(pageId) {
@@ -976,9 +976,9 @@ Un moment de recueillement et de partage dans l'intimité familiale pour céléb
             mobileNav.classList.toggle('active');
         }
 
-        // Countdown
+        // Countdown - CORRIGÉ POUR LE 12 AOÛT 2026 À 18H
         function updateCountdown() {
-            const weddingDate = new Date('2025-08-24T18:00:00');
+            const weddingDate = new Date('2026-08-12T18:00:00');
             const now = new Date();
             const diff = weddingDate - now;
 
@@ -1023,7 +1023,6 @@ Un moment de recueillement et de partage dans l'intimité familiale pour céléb
             // Sauvegarder la réponse
             const responseKey = `${eventType}_${response.nom}_${response.prenom}`;
             responses[responseKey] = response;
-            localStorage.setItem('weddingResponses', JSON.stringify(responses));
             
             alert('Votre réponse a été enregistrée avec succès !');
             
